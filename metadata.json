@@ -1,0 +1,6 @@
+{
+  "name": "ErolGo® Navigasyon Sistemi",
+  "description": "Profesyonel bina navigasyon ve sorgulama sistemi. Bina ID ve adres bazlı arama ile konum detaylarına hızlı erişim sağlar.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
