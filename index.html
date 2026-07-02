@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Erolgo Navigasyon Sistemi</title>
     <style>
-        /* Sayfadaki tüm boşlukları sıfırlayıp iframe'i tam ekran yapıyoruz */
+        /* Sayfadaki tüm kenarlık ve boşlukları sıfırlıyoruz */
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden; /* Kaydırma çubuklarının çift görünmesini engeller */
+            overflow: hidden; /* Çift kaydırma çubuğu oluşmasını engeller */
+            background-color: #ffffff;
         }
+        /* Iframe'i ekranı tamamen kaplayacak şekilde ayarlıyoruz */
         iframe {
             width: 100%;
             height: 100%;
@@ -23,8 +25,13 @@
 </head>
 <body>
 
-    <!-- Hedef siteyi tam ekran olarak sayfamıza gömüyoruz -->
-    <iframe src="https://erolgo-navigasyon-sistemi-970973845068.europe-west2.run.app/">
+    <!-- 
+      sandbox parametreleri uygulamanın çalışmasını sağlarken 
+      ana adres çubuğunu (top-navigation) değiştirmesini engeller.
+    -->
+    <iframe 
+        src="https://run.app"
+        sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-downloads">
         Tarayıcınız iframe elementini desteklemiyor.
     </iframe>
 
