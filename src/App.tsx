@@ -20,6 +20,10 @@ import { motion, AnimatePresence, Reorder } from "motion/react";
 import { BinaRecord } from "./types";
 
 export default function App() {
+  const API_BASE_URL = window.location.hostname.includes("github.io") 
+    ? "https://erolgo-navigasyon-sistemi-970973845068.europe-west2.run.app" 
+    : "";
+    
   const [showSplash, setShowSplash] = useState(true);
   const [searchId, setSearchId] = useState("");
   const [loading, setLoading] = useState(false);
@@ -82,7 +86,7 @@ export default function App() {
     setResult(null);
 
     try {
-      const response = await fetch(`/api/bina/search?id=${targetId}`);
+      const response = await fetch(`${API_BASE_URL}/api/bina/search?id=${targetId}`);
       const data = await response.json();
 
       if (data && Array.isArray(data) && data.length > 0) {
@@ -111,7 +115,7 @@ export default function App() {
 
     setFilterLoading(true);
     try {
-      const response = await fetch(`/api/bina/filter?text=${encodeURIComponent(text)}`);
+      const response = await fetch(`${API_BASE_URL}/api/bina/filter?text=${encodeURIComponent(text)}`);
       const data = await response.json();
       
       if (data && Array.isArray(data)) {
@@ -150,7 +154,7 @@ export default function App() {
 
     setRouteLoading(true);
     try {
-      const response = await fetch(`/api/bina/search?id=${id}`);
+      const response = await fetch(`${API_BASE_URL}/api/bina/search?id=${id}`);
       const data = await response.json();
       if (data && Array.isArray(data) && data.length > 0) {
         setRouteList(prev => [...prev, data[0]]);
