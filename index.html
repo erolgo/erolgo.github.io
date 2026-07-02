@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yönlendiriliyorsunuz...</title>
-    
-    <!-- 1. Yöntem: Meta Refresh (Sayfa açılır açılmaz yönlendirir) -->
-    <meta http-equiv="refresh" content="0; url=https://erolgo-navigasyon-sistemi-970973845068.europe-west2.run.app">
-    
-    <script type="text/javascript">
-        // 2. Yöntem: JavaScript Yönlendirmesi (Daha hızlı ve yedek olarak çalışır)
-        window.location.href = "https://erolgo-navigasyon-sistemi-970973845068.europe-west2.run.app";
-    </script>
+    <title>Erolgo Navigasyon Sistemi</title>
+    <style>
+        /* Sayfadaki tüm boşlukları sıfırlayıp iframe'i tam ekran yapıyoruz */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Kaydırma çubuklarının çift görünmesini engeller */
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <p>Uygulamaya yönlendiriliyorsunuz. Eğer otomatik olarak yönlendirilmezseniz 
-       <a href="https://erolgo-navigasyon-sistemi-970973845068.europe-west2.run.app">buraya tıklayın</a>.
-    </p>
+
+    <!-- Hedef siteyi tam ekran olarak sayfamıza gömüyoruz -->
+    <iframe src="https://erolgo-navigasyon-sistemi-970973845068.europe-west2.run.app/">
+        Tarayıcınız iframe elementini desteklemiyor.
+    </iframe>
+
 </body>
 </html>
