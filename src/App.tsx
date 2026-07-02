@@ -26,6 +26,30 @@ export default function App() {
     
   const [showSplash, setShowSplash] = useState(true);
   const [searchId, setSearchId] = useState("");
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+    }
+  };
+    
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<BinaRecord | null>(null);
@@ -301,7 +325,17 @@ export default function App() {
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">NAVİGASYON SİSTEMİ</p>
             </div>
           </div>
-          <span className="text-[10px] font-black text-slate-300">Coding by ETÜRK</span>
+          <div className="flex flex-col items-end gap-2">
+            <span className="text-[10px] font-black text-slate-300">Coding by ETÜRK</span>
+            {deferredPrompt && (
+              <button 
+                onClick={handleInstallClick}
+                className="rounded-full bg-[#1e3a8a] px-4 py-1.5 text-[10px] font-bold text-white shadow-lg hover:bg-[#1e40af] transition-all"
+              >
+                UYGULAMAYI İNDİR
+              </button>
+            )}
+          </div>
         </header>
 
         {/* Search Box */}
