@@ -85,8 +85,10 @@ export default function App() {
     setError(null);
     setResult(null);
 
+    const apiUrl = `${API_BASE_URL}/api/bina/search?id=${targetId}`;
+    console.log("Fetching from:", apiUrl);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/bina/search?id=${targetId}`);
+      const response = await fetch(apiUrl);
       const data = await response.json();
 
       if (data && Array.isArray(data) && data.length > 0) {
@@ -114,8 +116,10 @@ export default function App() {
     }
 
     setFilterLoading(true);
+    const apiUrl = `${API_BASE_URL}/api/bina/filter?text=${encodeURIComponent(text)}`;
+    console.log("Filtering from:", apiUrl);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/bina/filter?text=${encodeURIComponent(text)}`);
+      const response = await fetch(apiUrl);
       const data = await response.json();
       
       if (data && Array.isArray(data)) {
@@ -153,8 +157,10 @@ export default function App() {
     }
 
     setRouteLoading(true);
+    const apiUrl = `${API_BASE_URL}/api/bina/search?id=${id}`;
+    console.log("Route adding from:", apiUrl);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/bina/search?id=${id}`);
+      const response = await fetch(apiUrl);
       const data = await response.json();
       if (data && Array.isArray(data) && data.length > 0) {
         setRouteList(prev => [...prev, data[0]]);
