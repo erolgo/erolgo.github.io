@@ -326,7 +326,7 @@ export default function App() {
             </div>
           </div>
           <div className="flex flex-col items-end gap-2">
-            <span className="text-[10px] font-black text-slate-300">Coding by E·TÜRK</span>
+            <span className="text-[10px] font-black text-slate-300">Coding by ETÜRK</span>
             {deferredPrompt && (
               <button 
                 onClick={handleInstallClick}
@@ -343,7 +343,7 @@ export default function App() {
           <div className="mb-6 flex items-center justify-between">
             <h3 className="flex items-center gap-3 text-lg font-black font-sans">
               <Search className="text-[#1e3a8a]" size={20} />
-              Bir bina ID Sorgulayın..
+              Bir Bina ID Sorgulayın..
             </h3>
             {loading && <Loader2 className="animate-spin text-[#1e3a8a]" size={20} />}
           </div>
@@ -354,7 +354,7 @@ export default function App() {
                 type="number"
                 inputMode="numeric"
                 pattern="[0-9]*"
-                placeholder="Bina ID giriniz."
+                placeholder="Bina ID giriniz..."
                 value={searchId}
                 onChange={(e) => setSearchId(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
@@ -398,7 +398,7 @@ export default function App() {
               className={`flex items-center gap-2 text-sm font-black transition-all ${filterOpen ? "text-[#1e3a8a] scale-105" : "text-slate-400 hover:text-[#1e3a8a]"}`}
             >
               <Filter size={16} />
-              Adres ile Ara
+              Adres ile Filtrele
               {filterOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
             </button>
 
