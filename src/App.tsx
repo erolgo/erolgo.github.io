@@ -63,6 +63,24 @@ export default function App() {
   const [routeInput, setRouteInput] = useState("");
   const [routeList, setRouteList] = useState<BinaRecord[]>([]);
   const [routeLoading, setRouteLoading] = useState(false);
+  const [dailyCount, setDailyCount] = useState<number | null>(null);
+
+  const fetchStats = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/stats`);
+      const data = await response.json();
+      setDailyCount(data.count);
+    } catch (err) {
+      console.error("Stats fetch failed", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchStats();
+    // Refresh stats every minute
+    const interval = setInterval(fetchStats, 60000);
+    return () => clearInterval(interval);
+  }, [API_BASE_URL]);
 
   const [isRecording, setIsRecording] = useState(false);
   const [isRecordingFilter, setIsRecordingFilter] = useState(false);
@@ -117,6 +135,8 @@ export default function App() {
 
       if (data && Array.isArray(data) && data.length > 0) {
         setResult(data[0]);
+        // Increment count locally for instant feedback
+        setDailyCount(prev => (prev !== null ? prev + 1 : 1));
         setTimeout(() => {
           resultRef.current?.scrollIntoView({ behavior: "smooth" });
         }, 100);
@@ -148,6 +168,8 @@ export default function App() {
       
       if (data && Array.isArray(data)) {
         setFilterResults(data);
+        // Increment count locally
+        setDailyCount(prev => (prev !== null ? prev + 1 : 1));
       } else {
         setFilterResults([]);
       }
@@ -189,6 +211,8 @@ export default function App() {
       if (data && Array.isArray(data) && data.length > 0) {
         setRouteList(prev => [...prev, data[0]]);
         setRouteInput("");
+        // Increment count locally
+        setDailyCount(prev => (prev !== null ? prev + 1 : 1));
       } else {
         alert("Bina ID bulunamadı.");
       }
@@ -340,12 +364,17 @@ export default function App() {
 
         {/* Search Box */}
         <section className="rounded-[2rem] bg-white p-6 shadow-xl ring-1 ring-slate-100 sm:p-8">
-          <div className="mb-6 flex items-center justify-between">
-            <h3 className="flex items-center gap-3 text-lg font-black font-sans">
-              <Search className="text-[#1e3a8a]" size={20} />
-              Bir Bina ID Sorgulayın..
+          <div className="mb-3 flex items-start justify-between gap-2">
+            <h3 className="flex items-start gap-2 text-[13px] sm:text-xl font-black font-sans leading-tight text-black">
+              <Search className="text-[#1e3a8a] shrink-0 mt-0.5" size={18} />
+              <span className="flex-1">
+                Bir bina ID sorgulayın, 
+                {dailyCount !== null && (
+                  <> Bugün <span className="text-[#1e3a8a]">{dailyCount}</span> adet sorgulama yapıldı..</>
+                )}
+              </span>
             </h3>
-            {loading && <Loader2 className="animate-spin text-[#1e3a8a]" size={20} />}
+            {loading && <Loader2 className="animate-spin text-[#1e3a8a] shrink-0 mt-0.5" size={18} />}
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -358,7 +387,7 @@ export default function App() {
                 value={searchId}
                 onChange={(e) => setSearchId(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                className="w-full rounded-2xl bg-slate-50 px-5 py-4 font-sans text-lg font-black text-[#1e3a8a] outline-none ring-2 ring-transparent focus:bg-white focus:ring-[#1e3a8a] sm:text-xl [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                className="w-full rounded-2xl bg-slate-50 px-5 py-4 font-sans text-sm font-black text-[#1e3a8a] outline-none ring-2 ring-transparent focus:bg-white focus:ring-[#1e3a8a] sm:text-lg [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
               <button 
                 onClick={handleVoiceSearch}
